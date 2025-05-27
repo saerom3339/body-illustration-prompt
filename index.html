@@ -22,7 +22,7 @@
       const bodyDescription = descriptions[activity];
       const activityText = document.getElementById("activity").options[document.getElementById("activity").selectedIndex].text;
 
-      const prompt = `An illustration, clean, minimalist, full body shot of a person wearing basic fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). White background. Realistic human proportions with slight stylization for clarity. Soft, natural lighting. Neutral expression.\n\nSubject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.\nActivity level: ${activityText}\nBody shape description: ${bodyDescription}`;
+      const prompt = `A full-body cartoon-style character illustration with realistic proportions based on the subject's height and weight. The style is cute and friendly, inspired by Kakao Friends or Korean webtoon characters—round facial features, soft pastel colors, and simplified shapes. The character wears basic fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). White background. Neutral expression.\n\nSubject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.\nActivity level: ${activityText}\nBody shape description: ${bodyDescription}`;
 
       document.getElementById("output").value = prompt;
     }
