@@ -22,7 +22,14 @@
       const bodyDescription = descriptions[activity];
       const activityText = document.getElementById("activity").options[document.getElementById("activity").selectedIndex].text;
 
-      const prompt = `A full-body character illustration in a minimalist style with slight stylization for charm. Proportions should reflect real human height and weight accurately. Do not shrink body height. The body scale must reflect ${height}cm tall figure realistically in full-body view. Avoid chibi or super-deformed styles. Clean lines, soft pastel colors, neutral expression, and simple athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). White background.\n\nSubject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.\nActivity level: ${activityText}\nBody shape description: ${bodyDescription}`;
+      const prompt = `A full-body character illustration in a minimalist style with slight stylization for charm. 
+Use realistic human proportions: face length should be approximately 1/7.5 to 1/8 of total height (12.5% to 13.3%), and face width about 1/6.5 to 1/7.5 of height. 
+Avoid oversized heads or chibi proportions. Do not shrink body height. Scale should accurately reflect ${height}cm height. 
+Clean lines, soft pastel colors, neutral expression, and simple athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). White background.
+
+Subject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.
+Activity level: ${activityText}
+Body shape description: ${bodyDescription}`;
 
       document.getElementById("output").value = prompt;
     }
@@ -32,7 +39,7 @@
     h1 { font-size: 1.8em; }
     label { display: block; margin-top: 1em; }
     input, select { margin-top: 0.5em; width: 100%; padding: 0.5em; font-size: 1em; }
-    textarea { width: 100%; height: 200px; margin-top: 1em; font-size: 1em; padding: 1em; }
+    textarea { width: 100%; height: 250px; margin-top: 1em; font-size: 1em; padding: 1em; white-space: pre-wrap; }
     button { margin-top: 1.5em; padding: 0.7em 1.5em; font-size: 1em; cursor: pointer; }
   </style>
 </head>
