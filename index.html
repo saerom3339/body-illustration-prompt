@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Body Visualization Prompt Generator</title>
+  <title>Body Prompt Generator</title>
   <script>
     function generatePrompt() {
       const ageGroup = document.getElementById("ageGroup").value;
       const gender = document.getElementById("gender").value;
-      const height = parseFloat(document.getElementById("height").value); // in cm
+      const height = parseFloat(document.getElementById("height").value); // cm
       const currentWeight = parseFloat(document.getElementById("currentWeight").value);
-      const targetWeight = parseFloat(document.getElementById("targetWeight").value);
 
       const descriptions = {
         sedentary: "Visible softness around the midsection, hips, and arms. Minimal muscle tone. The figure appears rounded with a lack of defined contours.",
@@ -42,7 +41,7 @@
       const heightM = height / 100;
 
       function generateBodyBlock(weight, label) {
-        let block = `🟢 ${label.toUpperCase()} BODY (${weight}kg)\n\n`;
+        let block = `🔵 ${label.toUpperCase()} BODY (${weight}kg)\n\n`;
 
         for (const activity in descriptions) {
           const fat = bodyFatTable[gender][ageGroup][activity];
@@ -56,17 +55,20 @@
           block += `📏 Height: ${height}cm | ⚖️ Weight: ${weight}kg | 🧬 Body Fat: ${fat}%\n`;
           block += `📊 BMI: ${bmi} | 💧 Fat Mass: ${fatKg}kg | 💪 Lean Mass: ${leanKg}kg\n\n`;
 
-          block += `A full-body front view of a ${ageGroup} ${gender}, height ${height}cm, weight ${weight}kg, body fat ${fat}%. `;
-          block += `Standing straight with arms at sides. Wearing fitted athletic clothing (sports bra and shorts for female, T-shirt and shorts for male). `;
-          block += `Realistic human proportions, no cartoon or chibi. Natural lighting, white background, neutral expression. ${desc}\n\n----------------------------------------\n\n`;
+          block += `A realistic full-body illustration of a human figure, viewed front-on, standing straight with arms relaxed by the sides. `;
+          block += `Drawn with anatomically accurate human proportions based on ${height}cm height and ${weight}kg weight. `;
+          block += `Avoid any cartoon, chibi, or exaggerated stylization. This should resemble a body scan or health-assessment style diagram for tracking body transformation.\n\n`;
+          block += `Estimated body fat: ${fat}%\n\n`;
+          block += `The subject wears fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). `;
+          block += `White background, soft natural lighting, neutral expression, no background props.\n\n`;
+          block += `Subject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.\n`;
+          block += `Body shape description: ${desc}\n\n----------------------------------------\n\n`;
         }
 
         return block;
       }
 
-      const outputText = 
-        generateBodyBlock(currentWeight, "Current") +
-        generateBodyBlock(targetWeight, "Target");
+      const outputText = generateBodyBlock(currentWeight, "Current");
 
       document.getElementById("output").value = outputText;
     }
@@ -81,7 +83,7 @@
   </style>
 </head>
 <body>
-  <h1>Body Visualization Prompt Generator</h1>
+  <h1>Body Prompt Generator (Current Only)</h1>
 
   <label>Age Group:
     <select id="ageGroup">
@@ -100,9 +102,8 @@
 
   <label>Height (cm): <input type="number" id="height" value="170"></label>
   <label>Current Weight (kg): <input type="number" id="currentWeight" value="80"></label>
-  <label>Target Weight (kg): <input type="number" id="targetWeight" value="60"></label>
 
   <button onclick="generatePrompt()">Generate Prompts</button>
-  <textarea id="output" readonly placeholder="Your AI image prompts with BMI and body fat mass will appear here..."></textarea>
+  <textarea id="output" readonly placeholder="Your prompt with BMI and body fat info will appear here..."></textarea>
 </body>
 </html>
