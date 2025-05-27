@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Image Prompt Generator</title>
+  <title>Realistic Body Prompt Generator</title>
   <script>
     function generatePrompt() {
       const ageGroup = document.getElementById("ageGroup").value;
@@ -13,16 +13,16 @@
       const targetWeight = document.getElementById("targetWeight").value;
 
       const descriptions = {
-        sedentary: "Visible softness around the midsection, hips, and arms. Minimal muscle tone. The figure appears rounded with a lack of defined contours.",
-        light: "Moderate roundness in the midsection and thighs. Some structure is present, but limited muscle definition.",
-        regular: "Lean and balanced body. Slight curves and visible waistline. Subtle muscle tone in arms and legs.",
-        active: "Strong and athletic body. Defined muscles in arms, legs, and core. Well-defined waistline and healthy posture."
+        sedentary: "The body shows signs of a sedentary lifestyle, with visible softness around the midsection, hips, and arms. Muscle tone is minimal, and overall the figure appears rounded with a lack of defined contours.",
+        light: "The body has a soft shape with moderate roundness in the midsection and thighs. Some structure is present, but muscle definition is limited due to infrequent activity.",
+        regular: "The body is lean and balanced, with slight curves and some visible waistline. Subtle muscle tone in arms and legs suggests consistent movement and a healthy lifestyle.",
+        active: "The body appears strong and athletic, with clearly defined muscles in the arms, legs, and core. The waistline is well-defined, and the posture reflects excellent fitness."
       };
 
       const activityLabels = {
         sedentary: "Sedentary",
         light: "Light activity",
-        regular: "Regular activity",
+        regular: "Regular physical activity",
         active: "Very active"
       };
 
@@ -42,23 +42,53 @@
       let output = "🔵 CURRENT BODY (" + currentWeight + "kg)\n\n";
 
       for (const activity in descriptions) {
-        const desc = descriptions[activity];
-        const fat = bodyFatTable[gender][ageGroup][activity];
-        const label = activityLabels[activity];
+        const bodyDescription = descriptions[activity];
+        const activityText = activityLabels[activity];
+        const bodyFatPercent = bodyFatTable[gender][ageGroup][activity];
 
-        output += `🟢 Activity level: ${label}\n\n`;
-        output += `A full-body front view of a ${ageGroup} ${gender}, height ${height}cm, weight ${currentWeight}kg, body fat ${fat}%. Standing straight with arms at sides. Wearing fitted athletic clothing (sports bra and shorts for female, T-shirt and shorts for male). Realistic human proportions, no cartoon or chibi. Natural lighting, white background, neutral expression. ${desc}\n\n----------------------------------------\n\n`;
+        const prompt = `🟢 Activity level: ${activityText}
+
+A realistic full-body illustration of a human figure, viewed front-on, standing straight with arms relaxed by the sides. 
+Drawn with anatomically accurate human proportions based on ${height}cm height and ${currentWeight}kg weight. 
+Avoid any cartoon, chibi, or exaggerated stylization. This should resemble a body scan or health-assessment style diagram for tracking body transformation.
+
+Estimated body fat: ${bodyFatPercent}%
+
+The subject wears fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). 
+White background, soft natural lighting, neutral expression, no background props.
+
+Subject: A ${ageGroup} ${gender}, ${height}cm, ${currentWeight}kg.
+Body shape description: ${bodyDescription}
+
+----------------------------------------\n\n`;
+
+        output += prompt;
       }
 
       output += "🟢 TARGET BODY (" + targetWeight + "kg)\n\n";
 
       for (const activity in descriptions) {
-        const desc = descriptions[activity];
-        const fat = bodyFatTable[gender][ageGroup][activity];
-        const label = activityLabels[activity];
+        const bodyDescription = descriptions[activity];
+        const activityText = activityLabels[activity];
+        const bodyFatPercent = bodyFatTable[gender][ageGroup][activity];
 
-        output += `🟢 Activity level: ${label}\n\n`;
-        output += `A full-body front view of a ${ageGroup} ${gender}, height ${height}cm, weight ${targetWeight}kg, body fat ${fat}%. Standing straight with arms at sides. Wearing fitted athletic clothing (sports bra and shorts for female, T-shirt and shorts for male). Realistic human proportions, no cartoon or chibi. Natural lighting, white background, neutral expression. ${desc}\n\n----------------------------------------\n\n`;
+        const prompt = `🟢 Activity level: ${activityText}
+
+A realistic full-body illustration of a human figure, viewed front-on, standing straight with arms relaxed by the sides. 
+Drawn with anatomically accurate human proportions based on ${height}cm height and ${targetWeight}kg weight. 
+Avoid any cartoon, chibi, or exaggerated stylization. This should resemble a body scan or health-assessment style diagram for tracking body transformation.
+
+Estimated body fat: ${bodyFatPercent}%
+
+The subject wears fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). 
+White background, soft natural lighting, neutral expression, no background props.
+
+Subject: A ${ageGroup} ${gender}, ${height}cm, ${targetWeight}kg.
+Body shape description: ${bodyDescription}
+
+----------------------------------------\n\n`;
+
+        output += prompt;
       }
 
       document.getElementById("output").value = output;
@@ -74,7 +104,7 @@
   </style>
 </head>
 <body>
-  <h1>AI Image Prompt Generator</h1>
+  <h1>Realistic Body Prompt Generator</h1>
 
   <label>Age Group:
     <select id="ageGroup">
@@ -96,6 +126,6 @@
   <label>Target Weight (kg): <input type="number" id="targetWeight" value="60"></label>
 
   <button onclick="generatePrompt()">Generate Prompts</button>
-  <textarea id="output" readonly placeholder="AI-ready prompts will appear here..."></textarea>
+  <textarea id="output" readonly placeholder="Your detailed prompts will appear here..."></textarea>
 </body>
 </html>
