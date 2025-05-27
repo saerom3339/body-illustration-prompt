@@ -22,7 +22,7 @@
       const bodyDescription = descriptions[activity];
       const activityText = document.getElementById("activity").options[document.getElementById("activity").selectedIndex].text;
 
-      const prompt = `A full-body character illustration in a minimalist cartoon style with slight stylization for charm. Proportions should reflect real human height and weight accurately. Do not shrink body height. The body scale must reflect ${height}cm tall figure realistically in full-body view. Avoid chibi or super-deformed styles. Clean lines, soft pastel colors, neutral expression, and simple athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). White background.\n\nSubject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.\nActivity level: ${activityText}\nBody shape description: ${bodyDescription}`;
+      const prompt = `A full-body character illustration in a minimalist style with slight stylization for charm. Proportions should reflect real human height and weight accurately. Do not shrink body height. The body scale must reflect ${height}cm tall figure realistically in full-body view. Avoid chibi or super-deformed styles. Clean lines, soft pastel colors, neutral expression, and simple athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). White background.\n\nSubject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.\nActivity level: ${activityText}\nBody shape description: ${bodyDescription}`;
 
       document.getElementById("output").value = prompt;
     }
