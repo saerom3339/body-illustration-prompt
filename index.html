@@ -26,17 +26,33 @@
         active: "Very active"
       };
 
+      const bodyFatTable = {
+        female: {
+          "20s": { sedentary: 30, light: 28, regular: 25, active: 22 },
+          "30s": { sedentary: 32, light: 30, regular: 27, active: 24 },
+          "40s": { sedentary: 34, light: 32, regular: 29, active: 26 }
+        },
+        male: {
+          "20s": { sedentary: 22, light: 20, regular: 18, active: 15 },
+          "30s": { sedentary: 24, light: 22, regular: 20, active: 17 },
+          "40s": { sedentary: 26, light: 24, regular: 22, active: 19 }
+        }
+      };
+
       let output = "🔵 CURRENT BODY (" + currentWeight + "kg)\n\n";
 
       for (const activity in descriptions) {
         const bodyDescription = descriptions[activity];
         const activityText = activityLabels[activity];
+        const bodyFatPercent = bodyFatTable[gender][ageGroup][activity];
 
         const prompt = `🟢 Activity level: ${activityText}
 
 A realistic full-body illustration of a human figure, viewed front-on, standing straight with arms relaxed by the sides. 
 Drawn with anatomically accurate human proportions based on ${height}cm height and ${currentWeight}kg weight. 
 Avoid any cartoon, chibi, or exaggerated stylization. This should resemble a body scan or health-assessment style diagram for tracking body transformation.
+
+Estimated body fat: ${bodyFatPercent}%
 
 The subject wears fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). 
 White background, soft natural lighting, neutral expression, no background props.
@@ -45,6 +61,7 @@ Subject: A ${ageGroup} ${gender}, ${height}cm, ${currentWeight}kg.
 Body shape description: ${bodyDescription}
 
 ----------------------------------------\n\n`;
+
         output += prompt;
       }
 
@@ -53,12 +70,15 @@ Body shape description: ${bodyDescription}
       for (const activity in descriptions) {
         const bodyDescription = descriptions[activity];
         const activityText = activityLabels[activity];
+        const bodyFatPercent = bodyFatTable[gender][ageGroup][activity];
 
         const prompt = `🟢 Activity level: ${activityText}
 
 A realistic full-body illustration of a human figure, viewed front-on, standing straight with arms relaxed by the sides. 
 Drawn with anatomically accurate human proportions based on ${height}cm height and ${targetWeight}kg weight. 
 Avoid any cartoon, chibi, or exaggerated stylization. This should resemble a body scan or health-assessment style diagram for tracking body transformation.
+
+Estimated body fat: ${bodyFatPercent}%
 
 The subject wears fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). 
 White background, soft natural lighting, neutral expression, no background props.
@@ -67,6 +87,7 @@ Subject: A ${ageGroup} ${gender}, ${height}cm, ${targetWeight}kg.
 Body shape description: ${bodyDescription}
 
 ----------------------------------------\n\n`;
+
         output += prompt;
       }
 
@@ -78,7 +99,7 @@ Body shape description: ${bodyDescription}
     h1 { font-size: 1.8em; }
     label { display: block; margin-top: 1em; font-weight: bold; }
     input, select { margin-top: 0.5em; width: 100%; padding: 0.5em; font-size: 1em; }
-    textarea { width: 100%; height: 600px; margin-top: 1em; font-size: 1em; padding: 1em; white-space: pre-wrap; }
+    textarea { width: 100%; height: 700px; margin-top: 1em; font-size: 1em; padding: 1em; white-space: pre-wrap; }
     button { margin-top: 1.5em; padding: 0.7em 1.5em; font-size: 1em; cursor: pointer; }
   </style>
 </head>
@@ -105,6 +126,6 @@ Body shape description: ${bodyDescription}
   <label>Target Weight (kg): <input type="number" id="targetWeight" value="60"></label>
 
   <button onclick="generatePrompt()">Generate Prompts</button>
-  <textarea id="output" readonly placeholder="Your realistic body prompts will appear here..."></textarea>
+  <textarea id="output" readonly placeholder="Your detailed prompts will appear here..."></textarea>
 </body>
 </html>
