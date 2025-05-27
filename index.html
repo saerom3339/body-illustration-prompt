@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Flat Style Prompt Generator</title>
+  <title>Flat Style Prompt Generator (No Hallucination)</title>
   <script>
     function generatePrompt() {
       const ageGroup = document.getElementById("ageGroup").value;
@@ -11,6 +11,7 @@
       const height = parseFloat(document.getElementById("height").value);
       const weight = parseFloat(document.getElementById("currentWeight").value);
 
+      // 📌 출처 기반: 평균 체지방률 추정값 (성별+연령+활동량)
       const bodyFatTable = {
         female: {
           "20s": { sedentary: 30, light: 28, regular: 25, active: 22 },
@@ -35,15 +36,18 @@
 
       for (const activity in activityLabels) {
         const fat = bodyFatTable[gender][ageGroup][activity];
+        const fatText = `${fat}%`;
 
-        const prompt = `🟢 Activity level: ${activityLabels[activity]}
+        output += `🟢 Activity level: ${activityLabels[activity]}\n\n`;
+      
 
-
-A flat, minimalistic 2D digital illustration of a ${gender} with a height of ${height} cm and weight of ${weight} kg, depicted in athletic or casual activewear. The character stands in a relaxed posture against a neutral background. Style is clean, infographic-like, with soft colors, smooth outlines, and no background distractions. The character should reflect realistic body proportions based on the given height and weight. Do not use exaggerated cartoon features. Use subtle shading to show form.The expression is a faint smile.
-
-----------------------------------------draw me\n\n
-draw me`;
-        output += prompt;
+        output += `A flat, minimalistic 2D digital illustration of a ${gender} with a height of ${height} cm and weight of ${weight} kg, depicted in athletic or casual activewear. `;
+        output += `The character stands in a relaxed posture against a neutral background. `;
+        output += `Style is clean, infographic-like, with soft colors, smooth outlines, and no background distractions. `;
+        output += `The character should reflect realistic body proportions based on the given height and weight. `;
+        output += `Do not use exaggerated cartoon features. Use subtle shading to show form. The expression is a faint smile.\n\n`;
+        output += `----------------------------------------\n\n
+        draw me`;
       }
 
       document.getElementById("output").value = output;
@@ -54,7 +58,7 @@ draw me`;
     h1 { font-size: 1.8em; }
     label { display: block; margin-top: 1em; font-weight: bold; }
     input, select { margin-top: 0.5em; width: 100%; padding: 0.5em; font-size: 1em; }
-    textarea { width: 100%; height: 600px; margin-top: 1em; font-size: 1em; padding: 1em; white-space: pre-wrap; }
+    textarea { width: 100%; height: 700px; margin-top: 1em; font-size: 1em; padding: 1em; white-space: pre-wrap; }
     button { margin-top: 1.5em; padding: 0.7em 1.5em; font-size: 1em; cursor: pointer; }
   </style>
 </head>
@@ -76,8 +80,8 @@ draw me`;
     </select>
   </label>
 
-  <label>Height (cm): <input type="number" id="height" value="170"></label>
-  <label>Current Weight (kg): <input type="number" id="currentWeight" value="80"></label>
+  <label>Height (cm): <input type="number" id="height" value="170" min="100" max="250"></label>
+  <label>Current Weight (kg): <input type="number" id="currentWeight" value="80" min="30" max="200"></label>
 
   <button onclick="generatePrompt()">Generate Prompts</button>
   <textarea id="output" readonly placeholder="Flat 2D illustration prompts will appear here..."></textarea>
