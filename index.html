@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Body Illustration Prompt Generator</title>
+  <title>Realistic Body Prompt Generator</title>
   <script>
     function generatePrompt() {
       const ageGroup = document.getElementById("ageGroup").value;
       const gender = document.getElementById("gender").value;
       const height = document.getElementById("height").value;
-      const weight = document.getElementById("weight").value;
-      const activity = document.getElementById("activity").value;
+      const currentWeight = document.getElementById("currentWeight").value;
+      const targetWeight = document.getElementById("targetWeight").value;
 
       const descriptions = {
         sedentary: "The body shows signs of a sedentary lifestyle, with visible softness around the midsection, hips, and arms. Muscle tone is minimal, and overall the figure appears rounded with a lack of defined contours.",
@@ -19,32 +19,71 @@
         active: "The body appears strong and athletic, with clearly defined muscles in the arms, legs, and core. The waistline is well-defined, and the posture reflects excellent fitness."
       };
 
-      const bodyDescription = descriptions[activity];
-      const activityText = document.getElementById("activity").options[document.getElementById("activity").selectedIndex].text;
+      const activityLabels = {
+        sedentary: "Sedentary",
+        light: "Light activity",
+        regular: "Regular physical activity",
+        active: "Very active"
+      };
 
-      const prompt = `A full-body character illustration in a minimalist style with slight stylization for charm. 
-Use realistic human proportions: face length should be approximately 1/7.5 to 1/8 of total height (12.5% to 13.3%), and face width about 1/6.5 to 1/7.5 of height. 
-Avoid oversized heads or chibi proportions. Do not shrink body height. Scale should accurately reflect ${height}cm height. 
-Clean lines, soft pastel colors, neutral expression, and simple athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). White background.
+      let output = "🔵 CURRENT BODY (" + currentWeight + "kg)\n\n";
 
-Subject: A ${ageGroup} ${gender}, ${height}cm, ${weight}kg.
-Activity level: ${activityText}
-Body shape description: ${bodyDescription}`;
+      for (const activity in descriptions) {
+        const bodyDescription = descriptions[activity];
+        const activityText = activityLabels[activity];
 
-      document.getElementById("output").value = prompt;
+        const prompt = `🟢 Activity level: ${activityText}
+
+A realistic full-body illustration of a human figure, viewed front-on, standing straight with arms relaxed by the sides. 
+Drawn with anatomically accurate human proportions based on ${height}cm height and ${currentWeight}kg weight. 
+Avoid any cartoon, chibi, or exaggerated stylization. This should resemble a body scan or health-assessment style diagram for tracking body transformation.
+
+The subject wears fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). 
+White background, soft natural lighting, neutral expression, no background props.
+
+Subject: A ${ageGroup} ${gender}, ${height}cm, ${currentWeight}kg.
+Body shape description: ${bodyDescription}
+
+----------------------------------------\n\n`;
+        output += prompt;
+      }
+
+      output += "🟢 TARGET BODY (" + targetWeight + "kg)\n\n";
+
+      for (const activity in descriptions) {
+        const bodyDescription = descriptions[activity];
+        const activityText = activityLabels[activity];
+
+        const prompt = `🟢 Activity level: ${activityText}
+
+A realistic full-body illustration of a human figure, viewed front-on, standing straight with arms relaxed by the sides. 
+Drawn with anatomically accurate human proportions based on ${height}cm height and ${targetWeight}kg weight. 
+Avoid any cartoon, chibi, or exaggerated stylization. This should resemble a body scan or health-assessment style diagram for tracking body transformation.
+
+The subject wears fitted athletic clothing (e.g. sports bra and shorts for females, or fitted T-shirt and shorts for males). 
+White background, soft natural lighting, neutral expression, no background props.
+
+Subject: A ${ageGroup} ${gender}, ${height}cm, ${targetWeight}kg.
+Body shape description: ${bodyDescription}
+
+----------------------------------------\n\n`;
+        output += prompt;
+      }
+
+      document.getElementById("output").value = output;
     }
   </script>
   <style>
     body { font-family: sans-serif; padding: 2em; max-width: 800px; margin: auto; background-color: #f9f9f9; }
     h1 { font-size: 1.8em; }
-    label { display: block; margin-top: 1em; }
+    label { display: block; margin-top: 1em; font-weight: bold; }
     input, select { margin-top: 0.5em; width: 100%; padding: 0.5em; font-size: 1em; }
-    textarea { width: 100%; height: 250px; margin-top: 1em; font-size: 1em; padding: 1em; white-space: pre-wrap; }
+    textarea { width: 100%; height: 600px; margin-top: 1em; font-size: 1em; padding: 1em; white-space: pre-wrap; }
     button { margin-top: 1.5em; padding: 0.7em 1.5em; font-size: 1em; cursor: pointer; }
   </style>
 </head>
 <body>
-  <h1>Body Illustration Prompt Generator</h1>
+  <h1>Realistic Body Prompt Generator</h1>
 
   <label>Age Group:
     <select id="ageGroup">
@@ -61,19 +100,11 @@ Body shape description: ${bodyDescription}`;
     </select>
   </label>
 
-  <label>Height (cm): <input type="number" id="height" value="160"></label>
-  <label>Weight (kg): <input type="number" id="weight" value="70"></label>
+  <label>Height (cm): <input type="number" id="height" value="170"></label>
+  <label>Current Weight (kg): <input type="number" id="currentWeight" value="80"></label>
+  <label>Target Weight (kg): <input type="number" id="targetWeight" value="60"></label>
 
-  <label>Activity Level:
-    <select id="activity">
-      <option value="sedentary">Sedentary</option>
-      <option value="light">Light activity</option>
-      <option value="regular">Regular physical activity</option>
-      <option value="active">Very active</option>
-    </select>
-  </label>
-
-  <button onclick="generatePrompt()">Generate Prompt</button>
-  <textarea id="output" readonly placeholder="Your prompt will appear here..."></textarea>
+  <button onclick="generatePrompt()">Generate Prompts</button>
+  <textarea id="output" readonly placeholder="Your realistic body prompts will appear here..."></textarea>
 </body>
 </html>
